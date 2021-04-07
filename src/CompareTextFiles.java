@@ -1,59 +1,87 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class CompareTextFiles
 {
+   
     public static void main(String[] args) throws IOException
     {
-        BufferedReader reader1 = new BufferedReader(new FileReader("one.txt"));
+        ArrayList<String> file1Lines = new ArrayList<String>(); 
+        ArrayList<String> file2Lines = new ArrayList<String>(); 
 
-        BufferedReader reader2 = new BufferedReader(new FileReader("two.txt"));
-
-        String line1 = reader1.readLine();
-
-        String line2 = reader2.readLine();
-
-        boolean areEqual = true;
-
-        int lineNum = 1;
-
-        while (line1 != null || line2 != null)
+        BufferedReader file1 = new BufferedReader(new FileReader("one.txt"));
+        BufferedReader file2 = new BufferedReader(new FileReader("two.txt"));
+        try
         {
-            if(line1 == null || line2 == null)
-            {
-                areEqual = false;
+            String line = file1.readLine(); 
+            String line2 = file2.readLine(); 
 
-                break;
-            }
-            else if(! line1.equalsIgnoreCase(line2))
+            while(line != null)
             {
-                areEqual = false;
-
-                break;
+                file1Lines.add(line); 
+                line = file1.readLine(); 
             }
 
-            line1 = reader1.readLine();
-
-            line2 = reader2.readLine();
-
-            lineNum++;
+            while(line2 != null)
+            {
+                file2Lines.add(line2); 
+                line2 = file2.readLine();
+            }
         }
-
-        if(areEqual)
+        finally
         {
-            System.out.println("Two files have same content.");
-            System.out.println("")
+            file1.close();
+            file2.close(); 
         }
-        else
+
+        HashSet<String> set = new HashSet<String>();
+ 
+        for (int i = 0; i < file1Lines.size(); i++)
         {
-            System.out.println("Two files have different content. They differ at line "+lineNum);
+            for (int j = 0; j < file2Lines.size(); j++)
+            {
+                if(file1Lines.get(i).equals(file2Lines.get(j)))
+                {
+                    set.add(file1Lines.get(i));
+                }
+            }
+        }
+        System.out.println("The # of common lines: " + set.size());
+        System.out.println("The common lines are");
+        System.out.println(set);   
+        System.out.println("\n");
 
-            System.out.println("File1 has "+line1+" and File2 has "+line2+" at line "+lineNum);
+        System.out.println("Feedback for 1st file"); 
+        System.out.println(file1Lines.toString() + " is:"); 
+        for(int m = 0; m < file1Lines.size(); m++)
+        {
+            if(set.contains(file1Lines.get(m)))
+            {
+                System.out.println(file1Lines.get(m) + " is in both files"); 
+            }
+            else
+            {
+                System.out.println(file1Lines.get(m) + " is only in this file");
+            }
         }
 
-        reader1.close();
+        System.out.println("\n");
+        System.out.println("Feedback for 2nd file"); 
+        System.out.println(file2Lines.toString() + " is:"); 
+        for(int n = 0; n < file2Lines.size(); n++)
+        {
+            if(set.contains(file2Lines.get(n)))
+            {
+                System.out.println(file2Lines.get(n) + " is in both files"); 
+            }
+            else
+            {
+                System.out.println(file2Lines.get(n) + " is only in this file");
+            }
+        }
 
-        reader2.close();
     }
 }
