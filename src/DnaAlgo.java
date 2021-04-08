@@ -1,5 +1,5 @@
 //Partners: Alexandra Fernandez & Daniela Delgado
-//Running time of LongestCommonSubfile() = O(n * m) where n and m are the size of two respective arraylists arrayLists 
+//Running time of LongestCommonSubfile() = O(n * m) where n and m are the size of two respective arraylists 
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -41,11 +41,7 @@ public class DnaAlgo
         int file1Size = file1Lines.size();
         int file2Size = file2Lines.size();
 
-
-        //call LCS
-
         ArrayList<String> commonLines = largestCommonSubfile(file1Lines, file2Lines, file1Size, file2Size);
-
 
         System.out.println("The common lines are");
         System.out.println(commonLines.toString());
@@ -84,7 +80,8 @@ public class DnaAlgo
 
     }
 
-    static ArrayList<String> largestCommonSubfile(ArrayList<String> file1Lines, ArrayList<String> file2Lines, int file1Size, int file2Size){
+    public static ArrayList<String> largestCommonSubfile(ArrayList<String> file1Lines, ArrayList<String> file2Lines, int file1Size, int file2Size)
+    {
 
         ArrayList<String> commonLines = new ArrayList<String>();
 
